@@ -11,6 +11,7 @@ type Props<T> = PagerRendererProps<T> & {
   swipeVelocityThreshold?: number,
   minDeltaX?: number,
   GestureHandler: any,
+  setGestureRef?: function,
 };
 
 const DefaultTransitionSpec = {
@@ -26,6 +27,7 @@ export default class PagerExperimental<T: *> extends React.Component<Props<T>> {
     swipeVelocityThreshold: PropTypes.number,
     minDeltaX: PropTypes.number,
     GestureHandler: PropTypes.object,
+    setGestureRef: PropTypes.func,
   };
 
   static defaultProps = {
@@ -151,6 +153,7 @@ export default class PagerExperimental<T: *> extends React.Component<Props<T>> {
       navigationState,
       swipeEnabled,
       children,
+      setGestureRef = () => null,
       minDeltaX = 10
     } = this.props;
     const { width } = layout;
@@ -174,6 +177,7 @@ export default class PagerExperimental<T: *> extends React.Component<Props<T>> {
           { useNativeDriver: this.props.useNativeDriver }
         )}
         onHandlerStateChange={this._handleHandlerStateChange}
+        ref={setGestureRef}
       >
         <Animated.View
           style={[
